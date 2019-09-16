@@ -1,0 +1,51 @@
+<div class="main">
+    <p class="sign" align="center">Register</p>
+    <form class="form1" [formGroup]="registerForm" (ngSubmit)="register()">
+        <div class="justify-content-center" *ngIf="(registerForm.get('name').touched || registerForm.get('name').dirty) && !registerForm.get('name').value">
+            <span class="error-message">Name is required</span>
+        </div>
+        <input class="un " [ngClass]="{'error': (registerForm.get('name').touched || registerForm.get('name').dirty) && !registerForm.get('name').value}" type="text" formControlName="name" placeholder="Name">
+        <div class="justify-content-center" *ngIf="registerForm.get('username').touched || registerForm.get('username').dirty">
+                <span class="error-message" *ngIf="!registerForm.get('username').value ? setError(true) : setError(false)">
+                    Username is required
+                </span>
+                <span class="error-message" *ngIf="!registerForm.get('username').valid && error != true">
+                    Username must be atleast 6 characters
+                </span>
+                <span class="error-message" *ngIf="errorUsername && error != true">
+                    Username is already used.
+                </span>
+            </div>
+        <input class="un" (input)="checkUsername()"  [ngClass]="{'error': (registerForm.get('username').touched || registerForm.get('username').dirty) && !registerForm.get('username').value, 'error': (registerForm.get('username').touched || registerForm.get('username').dirty) && !registerForm.get('username').valid }" type="text" formControlName="username"  placeholder="Username">
+        <div class="justify-content-center" *ngIf="registerForm.get('email').touched || registerForm.get('email').dirty">
+                <span class="error-message" *ngIf="!registerForm.get('email').value ? setError(true) : setError(false)">
+                    Email is required
+                </span>
+                <span class="error-message" *ngIf="!registerForm.get('email').valid && error != true">
+                    Not a valid email
+                </span>
+                <span class="error-message" *ngIf="errorEmail && error != true">
+                    Email is already used.
+                </span>
+            </div>
+        <input class="un" (input)="checkEmail()" [ngClass]="{'error': (registerForm.get('email').touched || registerForm.get('email').dirty) && !registerForm.get('email').value, 'error': (registerForm.get('email').touched || registerForm.get('email').dirty) && !registerForm.get('email').valid }" type="text" formControlName="email" placeholder="Email">
+        <div class="justify-content-center" *ngIf="registerForm.get('password').touched || registerForm.get('password').dirty">
+                <span class="error-message" *ngIf="!registerForm.get('password').value ? setError(true) : setError(false)">
+                    Password is required
+                </span>
+                <span class="error-message" *ngIf="!registerForm.get('password').valid && error != true">
+                    Password must be atleast 6 characters
+                </span>
+            </div>
+        <input class="pass" [ngClass]="{'error': (registerForm.get('password').touched || registerForm.get('password').dirty) && !registerForm.get('password').value, 'error': (registerForm.get('password').touched || registerForm.get('password').dirty) && !registerForm.get('password').valid }" type="password" formControlName="password" placeholder="Password">
+        <div class="justify-content-center" *ngIf="registerForm.get('confirmpass').touched || registerForm.get('confirmpass').dirty">
+                <span class="error-message" *ngIf="registerForm.get('password').value != registerForm.get('confirmpass').value">
+                    Passwords do not match
+                </span>
+            </div>
+        <input class="pass" [ngClass]="{'error': (registerForm.get('confirmpass').touched || registerForm.get('confirmpass').dirty) && registerForm.get('confirmpass').value != registerForm.get('password').value }" type="password" formControlName="confirmpass"  placeholder="Confirm Password">
+        <button class="submit" [disabled]="!registerForm.valid">Register</button>  
+    </form> 
+
+    <a style="margin: 20px" class="justify-content-center" routerLink="../login">Click here to Login</a>         
+</div>

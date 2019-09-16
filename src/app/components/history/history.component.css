@@ -1,0 +1,198 @@
+.container {
+    padding: 16px;
+}
+.tweet-box {
+    font-size: 18px;
+    padding: 10px;
+    position: relative;
+  }
+  .tweet-input {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 16px;
+    padding: 10px 12px;
+    height: 100px;
+    outline: none;
+    width: 100%;
+    resize: none;
+  }
+  .input-style {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 16px;
+    padding: 10px 12px;
+    outline: none;
+    width: 70%;
+    resize: none;
+  }
+  span {
+    float: right;
+    padding: 18px 14px;
+  }
+  .warning {
+    color: #a76c00;
+  }
+  .danger {
+    color: #800000;
+  }
+  .button-submit {
+    background-color: #ccc;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    color: #fefefe;
+    font-size: 18px;
+    float: right;
+    margin-top: 10px;
+    padding: 10px 25px;
+  }
+  button:hover {
+    background-color: rgb(195, 216, 255);
+  }
+  button.active {
+    background-color: #008cff;
+    cursor: pointer;
+  }
+
+  
+  .justify-content-center {
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.blog{
+  border-radius: 20px;
+  border-color: gray;
+}
+
+#floating-button{
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: #008cff;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  cursor: pointer;
+  box-shadow: 0px 2px 5px #666;
+}
+
+.plus{
+  color: white;
+  position: absolute;
+  top: 0;
+  display: block;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  line-height: 55px;
+  font-size: 38px;
+  font-family: 'Roboto';
+  font-weight: 300;
+  animation: plus-out 0.3s;
+  transition: all 0.3s;
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  right: 105%;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.dark-modal .modal-content {
+  background-color: #292b2c;
+  color: white;
+}
+.dark-modal .close {
+  color: white;
+}
+.light-blue-backdrop {
+  background-color: #5cb3fd;
+}
+
+.error-message {
+  color: #cc0033;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 15px;
+  margin: 2px 0 10px;
+  
+}
+
+.error
+{
+ border:1px solid red;
+
+}
+.error::placeholder{
+  color:rgb(247, 195, 195);
+}
+
+.valid {
+  color: green
+}
+
+.pending{
+  color: orange
+}
+
+.invalid{
+  color: red
+}
+
+table {
+  width: 100%;
+  border: 1px solid black;
+}
+td{ 
+  /* width: 100%; */
+  border: 1px solid black;
+}
+tr{
+  width: 100%;
+}
+
+th {
+  border: 1px solid black;
+  height: 50px;
+}
+.justify-content-center {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+
+
+
+
+
+
+
+
+
+

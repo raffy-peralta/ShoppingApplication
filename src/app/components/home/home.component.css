@@ -1,0 +1,69 @@
+.body{
+  margin: 30px;
+}
+
+.quantity {
+  position: relative;
+}
+
+
+input[type=number]
+{
+  -moz-appearance: textfield;
+}
+
+.quantity input {
+  width: 45px;
+  height: 42px;
+  line-height: 1.65;
+  float: left;
+  display: block;
+  padding: 0;
+  margin: 0;
+  padding-left: 20px;
+  border: 1px solid #eee;
+}
+
+.quantity input:focus {
+  outline: 0;
+}
+
+.justify-content-center {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.plus-minus-input {
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.plus-minus-input .input-group-field {
+  text-align: center;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  padding: 1rem;
+}
+
+.plus-minus-input .input-group-field::-webkit-inner-spin-button,
+.plus-minus-input .input-group-field ::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+          appearance: none;
+}
+
+.plus-minus-input .input-group-button .circle {
+  border-radius: 50%;
+  padding: 0.25em 0.8em;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}
+

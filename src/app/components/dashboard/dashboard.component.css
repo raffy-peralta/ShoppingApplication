@@ -1,0 +1,37 @@
+.tweet-box {
+    font-size: 18px;
+    padding: 10px;
+    position: relative;
+  }
+  .tweet-input {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 16px;
+    padding: 10px 12px;
+    height: 100px;
+    outline: none;
+    width: 100%;
+    resize: none;
+  }
+  table {
+    width: 100%;
+    border: 1px solid black;
+  }
+  td{ 
+    /* width: 100%; */
+    border: 1px solid black;
+  }
+  tr{
+    width: 100%;
+  }
+  
+  th {
+    border: 1px solid black;
+    height: 50px;
+  }
+  .justify-content-center {
+    display: flex !important;
+    justify-content: center !important;
+  }

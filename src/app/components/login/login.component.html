@@ -1,0 +1,10 @@
+<div class="main">
+    <p class="sign" align="center">Sign in</p>
+    <form class="form1" [formGroup]="loginForm"  (ngSubmit)="login()">
+      <input class="un " type="text" formControlName="username"  placeholder="Username">
+      <input class="pass" type="password" formControlName="password"  placeholder="Password">
+      <button class="submit">Login</button>  
+    </form> 
+
+    <a style="margin: 20px" class="justify-content-center" routerLink="../register">Click here to register</a>         
+</div>

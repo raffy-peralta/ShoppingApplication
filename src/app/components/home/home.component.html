@@ -1,0 +1,56 @@
+<!-- <div class="body">
+  <div class="card">
+    asdadsad
+  </div>
+</div> -->
+<div class="body">
+  <div class="container">
+    <div class="row">
+      <ng-container *ngFor="let item of shopItems ; let i = index">
+        <div class="card col-sm-4" >
+          <img class="card-img-top justify-content-center" src="{{item.img}}" alt="Card image" style="width:100%; height: 300px;">
+          <div class="card-body">
+            <h4 class="card-title  justify-content-center">{{ item.name}}</h4>
+            <p class="card-text  justify-content-center">Stock: {{ item.stock }}</p>
+            <p class="card-text  justify-content-center">Price: {{ qty[i]*item.price }}</p>
+            <div class="quantity justify-content-center" style="margin: 20px">
+              <div class="input-group plus-minus-input justify-content-center">
+                <div class="input-group-button">
+                    <button type="button" (click)="subQty(i)" class="button hollow circle" data-quantity="minus" data-field="quantity">
+                      <i class="fa fa-minus" aria-hidden="true"></i>
+                    </button>
+                  </div>
+
+                  <!-- ayusin border -->
+                  <div>
+                    <p style="margin: 10px" *ngIf="item.stock != 0">{{qty[i]}}</p>
+                    <p style="margin: 10px" *ngIf="item.stock == 0">0</p>
+                  </div>
+                  <!-- <input type="number" min="0"  value="1" [(ngModel)]="qty[i]"> -->
+                  <div class="input-group-button">
+                    <button (click)="addQty(i, item.stock)" type="button" class="button hollow circle" data-quantity="plus" data-field="quantity">
+                      <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                  </div>
+              </div>
+            </div>
+            <div class="justify-content-center">
+              <button href="#" class="btn btn-primary" [disabled]="qty[i] == 0 || item.stock == 0" (click)="addItem(item.name, item.price, qty[i], item.id)">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      
+    </div>
+    
+    <br>
+  </div>
+  
+  
+</div>
+<!-- <ul class="customers">
+    <li *ngFor="let item of items | async; let i=index">
+      <span >{{i+1}}.</span> {{item.name}} -->
+      <!-- <button style="float: right" (click)="removeCustomer(i)">Remove</button> -->
+    <!-- </li>
+  </ul> -->
