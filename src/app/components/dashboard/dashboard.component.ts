@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit {
   constructor(private modalService: NgbModal, private store: Store<{items: Item[]}>,
     private itemsService: ItemsService, private router: Router, private authService: AuthService,
     private transactionsService: TransactionsService) {
-      this.cart = store.pipe(select('cart'));
+    this.cart = store.pipe(select('cart'));
    }
 
   ngOnInit() {
@@ -47,23 +47,24 @@ export class DashboardComponent implements OnInit {
         this.empty = false;
         console.log('pumapasok');
         
-        this.totalCart(); 
+        this.totalCart(data); 
       }
     })
   }
 
   removeCustomer(index){
     this.store.dispatch(new ItemRemove(index));
+    this.cart = this.store.pipe(select('cart'));
   }
 
-  totalCart(){
+  totalCart(data){
     this.total = 0;
-    this.cart.subscribe(data=>{
+
       data.forEach(element => {
         this.total = this.total + (element.price*element.qty)
       });
       
-    })
+
     // this.total = 0
     // let i = 0
     // this.cart.forEach(element => {
@@ -84,6 +85,7 @@ export class DashboardComponent implements OnInit {
   logout(){
     this.authService.logout();
     this.router.navigate(['login']);
+    
   }
 
 
@@ -116,12 +118,16 @@ export class DashboardComponent implements OnInit {
         }
         console.log(json);
         
-        this.transactionsService.insertTransactions(json).subscribe((data)=>{
+        this.transactionsService.insertTransactions(json).subscribe(data=>{
           this.store.dispatch(new ItemRemoveAll())
-          location.reload();
+          this.router.navigate(['/dashboard/history']) 
         });
+        
       })
-    })  
+
+       
+    })
+    
   }
 
 }

@@ -21,21 +21,21 @@
     {
       "name": "Item 1",
       "price": "1000",
-      "stock": 78,
+      "stock": 76,
       "img": "../../../assets/images/keyboard.jpg",
       "id": 1
     },
     {
       "name": "Item 2",
       "price": "500",
-      "stock": 9985,
+      "stock": 9951,
       "img": "../../../assets/images/mouse.jpg",
       "id": 2
     },
     {
       "name": "Item 3",
       "price": "300",
-      "stock": 9999,
+      "stock": 9998,
       "img": "../../../assets/images/earphones.jpg",
       "id": 3
     }
@@ -55,100 +55,16 @@
     {
       "items": [
         {
-          "name": "Item 1",
-          "price": "1000",
-          "qty": 1,
-          "id": 1
-        }
-      ],
-      "date": "Fri Sep 13 2019 15:38:00 GMT+0800 (China Standard Time)",
-      "userId": 1,
-      "id": 2
-    },
-    {
-      "items": [
-        {
-          "name": "Item 1",
-          "price": "1000",
-          "qty": 1,
-          "id": 1
-        }
-      ],
-      "date": "Fri Sep 13 2019 15:40:28 GMT+0800 (China Standard Time)",
-      "userId": 1,
-      "id": 3
-    },
-    {
-      "items": [
-        {
-          "name": "Item 1",
-          "price": "1000",
-          "qty": 1,
-          "id": 1
-        }
-      ],
-      "date": "Fri Sep 13 2019 15:46:42 GMT+0800 (China Standard Time)",
-      "userId": 1,
-      "id": 4
-    },
-    {
-      "items": [
-        {
-          "name": "Item 1",
-          "price": "1000",
-          "qty": 1,
-          "id": 1
-        }
-      ],
-      "date": "Fri Sep 13 2019 16:10:15 GMT+0800 (China Standard Time)",
-      "userId": 1,
-      "id": 7
-    },
-    {
-      "items": [
-        {
-          "name": "Item 1",
-          "price": "1000",
-          "qty": 1,
-          "id": 1
-        }
-      ],
-      "date": "Mon Sep 16 2019 09:31:20 GMT+0800 (China Standard Time)",
-      "userId": 1,
-      "id": 8
-    },
-    {
-      "items": [],
-      "date": "Mon Sep 16 2019 09:31:20 GMT+0800 (China Standard Time)",
-      "userId": 1,
-      "id": 9
-    },
-    {
-      "items": [
-        {
           "name": "Item 2",
           "price": "500",
-          "qty": 1,
-          "id": 2
-        }
-      ],
-      "date": "Mon Sep 16 2019 09:31:42 GMT+0800 (China Standard Time)",
-      "userId": 1,
-      "id": 10
-    },
-    {
-      "items": [
-        {
-          "name": "Item 2",
-          "price": "500",
-          "qty": 1,
+          "qty": 15,
           "id": 2
         },
         {
-          "name": "Item 2",
-          "price": "500",
+          "name": "Item 1",
+          "price": "1000",
           "qty": 1,
-          "id": 2
+          "id": 1
         },
         {
           "name": "Item 3",
@@ -157,9 +73,9 @@
           "id": 3
         }
       ],
-      "date": "Mon Sep 16 2019 15:38:34 GMT+0800 (China Standard Time)",
+      "date": "Tue Sep 17 2019 16:49:47 GMT+0800 (China Standard Time)",
       "userId": 1,
-      "id": 11
+      "id": 2
     }
   ]
 }

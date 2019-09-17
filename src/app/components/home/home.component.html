@@ -35,7 +35,7 @@
               </div>
             </div>
             <div class="justify-content-center">
-              <button href="#" class="btn btn-primary" [disabled]="qty[i] == 0 || item.stock == 0" (click)="addItem(item.name, item.price, qty[i], item.id)">Add to Cart</button>
+              <button href="#" class="btn btn-primary"  [disabled]="qty[i] == 0 || item.stock == 0" (click)="updateCart(item.name, item.price, qty[i], item.id)">Add to Cart</button>
             </div>
           </div>
         </div>
@@ -50,7 +50,6 @@
 </div>
 <!-- <ul class="customers">
     <li *ngFor="let item of items | async; let i=index">
-      <span >{{i+1}}.</span> {{item.name}} -->
-      <!-- <button style="float: right" (click)="removeCustomer(i)">Remove</button> -->
-    <!-- </li>
-  </ul> -->
+      <span >{{i+1}}.</span> {{item.name}} : {{item.qty}}  
+  </li>
+</ul> -->

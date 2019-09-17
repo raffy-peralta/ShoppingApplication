@@ -17,18 +17,27 @@ import { ItemGet } from 'src/app/actions/items.action';
 
 export class HomeComponent implements OnInit {
   items: Observable<Item[]>
-  @Input() try: any = 'hello';
+  cart: any[];
   qty: any[] = []
   shopItems: any;
-  
+  empty = true;
   constructor(private store: Store<{ items: Item[]}>, private itemService: ItemsService) { 
-    this.items = store.pipe(select('cart'));
+    
 
     // console.log(this.items);
   }
 
   ngOnInit() {
+    this.items = this.store.pipe(select('cart'));
+    this.items.subscribe((data)=>{
+      this.cart = data;
+      if(this.cart.length > 0){
+        this.empty = false;
+      }
+      
+    })
     this.getItems();
+    
   }
 
   getItems(){
@@ -39,10 +48,7 @@ export class HomeComponent implements OnInit {
       this.qty.fill(1);
     })
     
-    // this.itemService.getJSON().subscribe((data)=>{
-    //   this.shopItems = data;
-      
-    // })
+
   }
 
   addQty(index, maxQty){
@@ -57,51 +63,66 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  addItem(name, price, qty, id){
-    var status = false;
-    this.items.subscribe(data=>{
-      if(data.length > 0){
-        status = true; 
-      }
-      console.log(data.length);
-    })
+  
 
+  updateCart(name, price, qty, id){
+    
+    // var foo = [1,2,3,4,5,6,7,8,9,10];
+    // var bar = new Promise((resolve, reject) => {
+    //   foo.forEach((value, index, array) => {
+    //       console.log(value);
+    //       if (index === array.length -1) resolve();
+    //   });
+    // });
+    
+    // bar.then(() => {
+    //     console.log('All done!');
+    // });
+
+    var status = false;
     const item = new Item();
     item.name = name;
     item.price = price;
     item.qty = qty;
     item.id = id
-    // if(status == false){
-      this.store.dispatch(new ItemAdd(item))
-    // }else{
-    //   let obj = {
-    //     item: item,
-    //     id: 0
-    //   }  
-    //   this.store.dispatch(new ItemUpdate(obj))
-    // } 
-  }
+    
+    
+      
+      var finish = new Promise((resolve, reject)=>{
 
+        if(this.cart.length === 0){
+          this.store.dispatch(new ItemAdd(item))
+        } else {
+          this.cart.forEach((value, index, array) => {
+          
+            if(id == value.id){
+              value.qty = value.qty + qty
+              status = true;
+              console.log(status);
+              
+            }    
+            if (index === array.length -1) {
+              resolve();  
+            }
+          });
+        }
+      });
+
+      finish.then(() => {
+        
+        if(status){
+          this.store.dispatch(new ItemUpdate(this.cart))
+          console.log('update')
+        }else{
+          console.log('add1')
+          
+          this.store.dispatch(new ItemAdd(item))
+        }
+      })   
+    
+  
+    
+    
+  }
 }
-        // this.items.subscribe(data=>{
-        //   let existing = false
-        //   let index = 0;
-        //   let itemid = 0;
-        //   data.forEach(element => {
-        //     if(id == element.id){
-        //       existing = true;
-        //       itemid = index;
-        //     }   
-        //     index++;
-        //   });
-        //   if(existing){
-        //     let obj = {
-        //       item: item,
-        //       id: 0
-        //     }
-            
-        //     this.store.dispatch(new ItemUpdate(obj))
-        //   }else{
-        //     this.store.dispatch(new ItemAdd(item))
-        //   }
-        // })
+       

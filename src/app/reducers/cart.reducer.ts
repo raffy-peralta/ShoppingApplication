@@ -16,10 +16,8 @@ export function CartReducer(state = initialState, action: ActionEx){
             localStorage.setItem('state', JSON.stringify(storage));
             return storage;
         case CartActionTypes.Update:
-            return [
-                ...state.slice(0, action.payload['id']),
-                ...state.slice(action.payload['id'] + 1),
-            ];
+            localStorage.setItem('state', JSON.stringify(action.payload));
+            return action.payload
         case CartActionTypes.RemoveAll:
             state = [];
             localStorage.removeItem('state');
