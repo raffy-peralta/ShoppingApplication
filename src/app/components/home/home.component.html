@@ -5,9 +5,23 @@
 </div> -->
 <div class="body">
   <div class="container">
+    <div style="margin: 20px">
+      <div class="tweet-box justify-content-center">
+        <input class="input-style" [(ngModel)]="search">
+      </div>
+    </div>
+    <!-- <div class="row justify-content-center" *ngIf="showEmpty()">
+        <div class="container justify-content-center">   
+            <div class="card col-sm-8" style="padding: 20px">
+                <div class="card-body">
+                    No Drafts Available                    
+                </div>
+            </div>
+        </div>
+    </div> -->
     <div class="row">
       <ng-container *ngFor="let item of shopItems ; let i = index">
-        <div class="card col-sm-4" >
+        <div class="card col-sm-4" [hidden]="!searchItem(item.name)">
           <img class="card-img-top justify-content-center" src="{{item.img}}" alt="Card image" style="width:100%; height: 300px;">
           <div class="card-body">
             <h4 class="card-title  justify-content-center">{{ item.name}}</h4>
@@ -45,6 +59,7 @@
     
     <br>
   </div>
+  
   
   
 </div>

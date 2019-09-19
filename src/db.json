@@ -2,9 +2,8 @@
   "users": [
     {
       "name": "raffy",
-      "password": "123",
+      "password": "qweqwe",
       "username": "raffyperalta",
-      "role": 1,
       "email": "raffy.peralta.01@gmail.com",
       "id": 1
     },
@@ -76,6 +75,26 @@
       "date": "Tue Sep 17 2019 16:49:47 GMT+0800 (China Standard Time)",
       "userId": 1,
       "id": 2
+    }
+  ],
+  "cart": [
+    {
+      "items": [
+        {
+          "name": "Item 1",
+          "price": "1000",
+          "qty": 1,
+          "id": 1
+        },
+        {
+          "name": "Item 2",
+          "price": "500",
+          "qty": 1,
+          "id": 2
+        }
+      ],
+      "userId": 1,
+      "id": 1
     }
   ]
 }

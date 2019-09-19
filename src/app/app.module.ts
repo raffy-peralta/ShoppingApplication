@@ -23,6 +23,9 @@ import { TransactionsService } from './services/transactions/transactions.servic
 import { TransactionsReducer } from './reducers/transactions.reducer';
 import { TransactionsEffect } from './effects/transactions.effects';
 import { NgPipesModule } from 'ngx-pipes';
+import { ProfileComponent } from './components/profile/profile.component';
+import { ProfileEffect } from './effects/profile.effects';
+import { ProfileReducer } from './reducers/profile.reducer';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,8 @@ import { NgPipesModule } from 'ngx-pipes';
     RegisterComponent,
     HomeComponent,
     DashboardComponent,
-    HistoryComponent
+    HistoryComponent,
+    ProfileComponent
   ],
   providers: [ConfigService,
     {
@@ -52,8 +56,9 @@ import { NgPipesModule } from 'ngx-pipes';
     NgbModule,
     HttpClientModule,
     NgPipesModule,
-    StoreModule.forRoot({cart: CartReducer, items: ItemsReducer, transactions: TransactionsReducer}),
-    EffectsModule.forRoot([itemsEffect, TransactionsEffect])
+    StoreModule.forRoot({cart: CartReducer, items: ItemsReducer, 
+      transactions: TransactionsReducer, accounts: ProfileReducer}),
+    EffectsModule.forRoot([itemsEffect, TransactionsEffect, ProfileEffect])
   ],
   bootstrap: [AppComponent]
 })

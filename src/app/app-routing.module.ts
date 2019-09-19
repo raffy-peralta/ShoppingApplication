@@ -7,6 +7,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HistoryComponent } from './components/history/history.component';
 import { AuthGuard } from './services/guards/auth.guard';
 import { RoleGuard } from './services/guards/role.guard';
+import { ProfileComponent } from './components/profile/profile.component';
   
 
 
@@ -29,6 +30,9 @@ const dashboardRoutes  = [
       },
       {
         path: 'history', component: HistoryComponent
+      },
+      {
+        path: 'profile', component: ProfileComponent
       },
       {
         path: '', redirectTo: 'home', pathMatch: 'full'

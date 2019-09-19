@@ -43,6 +43,7 @@ export class AuthService {
    */
   logout(): void {
     this.clear();
+    localStorage.removeItem('state');
     // this._router.navigate(['/login']);
   }
 

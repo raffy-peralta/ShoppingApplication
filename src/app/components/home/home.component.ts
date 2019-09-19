@@ -21,14 +21,47 @@ export class HomeComponent implements OnInit {
   qty: any[] = []
   shopItems: any;
   empty = true;
+  search: string = '';
+  clicked: boolean = false;
+  searchStatus: boolean = false;
+  showNotFound: boolean = false;
   constructor(private store: Store<{ items: Item[]}>, private itemService: ItemsService) { 
     
 
     // console.log(this.items);
   }
+  showEmpty(): boolean{
+    if(this.search.length == 0){
+      this.showNotFound =  false;
+    }else{
+      if(this.searchStatus){
+        this.showNotFound =  false;
+      }else{
+        this.showNotFound =  true;
+      }
+    }
+    return this.showNotFound
+  }
+
+  searchItem(name): boolean{
+    
+    name = name.toLowerCase();  
+    
+    if(name.includes(this.search.toLocaleLowerCase())){
+      this.searchStatus = true;
+      this.showNotFound = false;
+      return this.searchStatus;
+    }else{  
+      this.searchStatus = false;
+      this.showNotFound = true;
+      return this.searchStatus;
+    }
+  }
 
   ngOnInit() {
     this.items = this.store.pipe(select('cart'));
+    this.search = '';
+    
     this.items.subscribe((data)=>{
       this.cart = data;
       if(this.cart.length > 0){
@@ -69,10 +102,10 @@ export class HomeComponent implements OnInit {
     
     // var foo = [1,2,3,4,5,6,7,8,9,10];
     // var bar = new Promise((resolve, reject) => {
-    //   foo.forEach((value, index, array) => {
-    //       console.log(value);
-    //       if (index === array.length -1) resolve();
-    //   });
+      // foo.forEach((value, index, array) => {
+      //     console.log(value);
+      //     if (index === array.length -1) resolve();
+      // });
     // });
     
     // bar.then(() => {

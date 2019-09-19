@@ -12,6 +12,7 @@ import { ItemsService } from 'src/app/services/items/items.service';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { TransactionsService } from 'src/app/services/transactions/transactions.service';
+import { CartService } from 'src/app/services/cart/cart.service';
 
 
 @Component({
@@ -26,14 +27,16 @@ export class DashboardComponent implements OnInit {
   empty: boolean;
   total: any = 0;
   profile: Observable<any>
+  id: any;
   
   constructor(private modalService: NgbModal, private store: Store<{items: Item[]}>,
     private itemsService: ItemsService, private router: Router, private authService: AuthService,
-    private transactionsService: TransactionsService) {
+    private transactionsService: TransactionsService, private cartService: CartService) {
     this.cart = store.pipe(select('cart'));
    }
 
   ngOnInit() {
+    this.id = JSON.parse(localStorage.getItem('details')).id
     // this.cart = this.home
   }
 
@@ -83,7 +86,20 @@ export class DashboardComponent implements OnInit {
   }
   
   logout(){
+    this.cart.subscribe(data=>{
+      // console.log(data);
+      let json = {
+        items: data,
+        id: this.id 
+      }
+      // console.log(json);
+      
+      // this.cartService.insert(json).subscribe();
+
+    })
+    
     this.authService.logout();
+    this.store.dispatch(new ItemRemoveAll);
     this.router.navigate(['login']);
     
   }

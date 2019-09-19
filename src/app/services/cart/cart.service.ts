@@ -1,26 +1,27 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AccountService {
-  baseUrl: any = JSON.parse(localStorage.getItem('baseUrl')).baseUrl+'users';
+export class CartService {
+
   constructor(private http: HttpClient) { }
+  baseUrl: any = JSON.parse(localStorage.getItem('baseUrl')).baseUrl+'cart';
 
   public getJSON(): Observable<any>{
     
     return this.http.get(this.baseUrl);
   }
 
-  register(data){
+  insert(data){
     let headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json');
     return this.http.post(this.baseUrl, data, {headers});
   }
 
-  updateProfile(data, i){
+  update(data, i){
     let headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json');
     return this.http.put(this.baseUrl+'/'+i, data, {headers});

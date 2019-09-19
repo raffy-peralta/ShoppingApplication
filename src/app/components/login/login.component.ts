@@ -4,6 +4,10 @@ import { AccountService } from 'src/app/services/account/account.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { CartService } from 'src/app/services/cart/cart.service';
+import { Store } from '@ngrx/store';
+import { CartActionTypes, ItemAdd } from 'src/app/actions/cart.action';
+import { Item } from 'src/app/models/item';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +17,9 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class LoginComponent implements OnInit {
   loginForm: any;
   accounts: Observable<String>;
-  constructor(private accountService: AccountService, private router: Router, private authService: AuthService) { }
+  cart: any[];
+  constructor(private accountService: AccountService, private router: Router,
+     private authService: AuthService, private cartService: CartService, private store: Store<{items: Item[]}>) { }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -31,19 +37,25 @@ export class LoginComponent implements OnInit {
           console.log("true")
           let json = {"name": element.name, "username": element.username, "email": element.email, 
           "id": element.id};
-          this.authService.login(json);
-          // if(element.role == 1){
-          //   // this.authService.loginAdmin(json);
-          // }else if(element.role == 2){
-          //   // this.authService.login(json);
-          // }
-          // // this.error = false;
           
+          this.cartService.getJSON().subscribe((data)=>{
+            this.cart = data;
+            
+            this.cart.forEach(element2 => {
+              if(element2.userId == element.id){
+                element2.items.forEach((element3, index, array) => {
+                  // console.log(element3);
+                  this.store.dispatch(new ItemAdd(element3));
+                  if (index === array.length -1){
+                    this.authService.login(json);
+                  }
+                });
+              } 
+            }); 
+          })  
         }else{
-          console.log("false");
           // this.error = true;
         }
-
       });
     });
   }
