@@ -17,11 +17,12 @@ import { elementEventFullName } from '@angular/compiler/src/view_compiler/view_c
 })
 
 export class HomeComponent implements OnInit {
-  items: Observable<Item[]>
+  items: Item[]
   cart: any[];
-  qty: any[] = []
-  shopItems: any;
+  qty: any[];
+  shopItems: any[];
   search: string;
+  itemStocks: any[];
   clicked: boolean = false;
   searchStatus: boolean = false;
   showNotFound: boolean = false;
@@ -31,16 +32,25 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.items = this.store.pipe(select('cart'));
-    this.search = '';
-    this.empty = false;
-    this.items.subscribe((data)=>{
-      this.cart = data;
-      if(this.cart.length > 0){
-        this.empty = false;
-      }
+    this.qty = []
+    this.itemStocks = [];
+    // this.items = this.store.pipe(select('cart'));
+    this.store.select('cart').subscribe((data) => {
+      this.items = data;
+      console.log(data);
       
     })
+    this.search = '';
+    this.empty = false;
+    // this.items.subscribe((data)=>{     
+    //   this.cart = data;
+      
+      
+    //   if(this.cart.length > 0){
+    //     this.empty = false;
+    //   }
+      
+    // })
     this.getItems();
     
   }
@@ -78,13 +88,25 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  getStocks(stocks, id): number{
+    if(this.items){
+      this.items.forEach(element => {
+        if(id == element.id){
+          stocks = stocks - element.qty; 
+        }   
+      });
+    }
+    return stocks;
+  }
+
   
 
   getItems(){
     this.store.dispatch(new ItemGet(''));
     this.store.select('items').subscribe((data)=>{
       this.shopItems = data; 
-      this.qty.length = this.shopItems.length
+      this.qty.length = this.shopItems.length;
+      this.itemStocks.length = this.shopItems.length;
       this.qty.fill(1);
     })
     
@@ -106,6 +128,7 @@ export class HomeComponent implements OnInit {
   
 
   updateCart(name, price, qty, id, i){
+
     this.qty[i] = 1;
     var status = false;
     const item = new Item();
@@ -114,10 +137,10 @@ export class HomeComponent implements OnInit {
     item.qty = qty;
     item.id = id 
     var finish = new Promise((resolve, reject)=>{
-      if(this.cart.length === 0){
+      if(this.items.length === 0){
         this.store.dispatch(new ItemAdd(item))
       } else {
-        this.cart.forEach((value, index, array) => {
+        this.items.forEach((value, index, array) => {
           if(id == value.id){
             value.qty = value.qty + qty
             status = true;
@@ -131,7 +154,7 @@ export class HomeComponent implements OnInit {
     });
     finish.then(() => {    
       if(status){
-        this.store.dispatch(new ItemUpdate(this.cart))
+        this.store.dispatch(new ItemUpdate(this.items))
 
       }else{
      
