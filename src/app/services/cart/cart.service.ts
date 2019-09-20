@@ -11,7 +11,7 @@ export class CartService {
   baseUrl: any = JSON.parse(localStorage.getItem('baseUrl')).baseUrl+'cart';
 
   public getJSON(): Observable<any>{
-    
+    console.log(this.baseUrl);
     return this.http.get(this.baseUrl);
   }
 
@@ -25,5 +25,13 @@ export class CartService {
     let headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json');
     return this.http.put(this.baseUrl+'/'+i, data, {headers});
+  }
+
+  delete(i){
+    console.log(this.baseUrl);
+    
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    return this.http.delete(this.baseUrl+'/'+i, {headers});
   }
 }

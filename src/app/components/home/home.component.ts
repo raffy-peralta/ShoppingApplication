@@ -8,6 +8,7 @@ import { EventEmitter } from 'events';
 import { FormControl } from '@angular/forms';
 import { ItemsService } from 'src/app/services/items/items.service';
 import { ItemGet } from 'src/app/actions/items.action';
+import { elementEventFullName } from '@angular/compiler/src/view_compiler/view_compiler';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -20,28 +21,47 @@ export class HomeComponent implements OnInit {
   cart: any[];
   qty: any[] = []
   shopItems: any;
-  empty = true;
-  search: string = '';
+  search: string;
   clicked: boolean = false;
   searchStatus: boolean = false;
   showNotFound: boolean = false;
+  empty: boolean;
   constructor(private store: Store<{ items: Item[]}>, private itemService: ItemsService) { 
-    
 
-    // console.log(this.items);
   }
-  showEmpty(): boolean{
-    if(this.search.length == 0){
-      this.showNotFound =  false;
-    }else{
-      if(this.searchStatus){
-        this.showNotFound =  false;
-      }else{
-        this.showNotFound =  true;
+
+  ngOnInit() {
+    this.items = this.store.pipe(select('cart'));
+    this.search = '';
+    this.empty = false;
+    this.items.subscribe((data)=>{
+      this.cart = data;
+      if(this.cart.length > 0){
+        this.empty = false;
       }
-    }
-    return this.showNotFound
+      
+    })
+    this.getItems();
+    
   }
+
+  getSearch(item){
+    var result = item.split(' ').join('')
+    this.empty = true;   
+    if(this.shopItems.length != 0){
+      this.shopItems.forEach(element => {        
+        if(element.name.toLocaleLowerCase().includes(item.toLocaleLowerCase())){          
+          this.empty = false;
+        }else if(result.length != 0){
+           this.empty = false;
+
+        }
+      });
+    }else{
+      this.empty = true;
+    }
+    return this.empty;
+  } 
 
   searchItem(name): boolean{
     
@@ -58,20 +78,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    this.items = this.store.pipe(select('cart'));
-    this.search = '';
-    
-    this.items.subscribe((data)=>{
-      this.cart = data;
-      if(this.cart.length > 0){
-        this.empty = false;
-      }
-      
-    })
-    this.getItems();
-    
-  }
+  
 
   getItems(){
     this.store.dispatch(new ItemGet(''));
@@ -98,64 +105,39 @@ export class HomeComponent implements OnInit {
 
   
 
-  updateCart(name, price, qty, id){
-    
-    // var foo = [1,2,3,4,5,6,7,8,9,10];
-    // var bar = new Promise((resolve, reject) => {
-      // foo.forEach((value, index, array) => {
-      //     console.log(value);
-      //     if (index === array.length -1) resolve();
-      // });
-    // });
-    
-    // bar.then(() => {
-    //     console.log('All done!');
-    // });
-
+  updateCart(name, price, qty, id, i){
+    this.qty[i] = 1;
     var status = false;
     const item = new Item();
     item.name = name;
     item.price = price;
     item.qty = qty;
-    item.id = id
-    
-    
-      
-      var finish = new Promise((resolve, reject)=>{
-
-        if(this.cart.length === 0){
-          this.store.dispatch(new ItemAdd(item))
-        } else {
-          this.cart.forEach((value, index, array) => {
-          
-            if(id == value.id){
-              value.qty = value.qty + qty
-              status = true;
-              console.log(status);
-              
-            }    
-            if (index === array.length -1) {
-              resolve();  
-            }
-          });
-        }
-      });
-
-      finish.then(() => {
+    item.id = id 
+    var finish = new Promise((resolve, reject)=>{
+      if(this.cart.length === 0){
+        this.store.dispatch(new ItemAdd(item))
+      } else {
+        this.cart.forEach((value, index, array) => {
+          if(id == value.id){
+            value.qty = value.qty + qty
+            status = true;
         
-        if(status){
-          this.store.dispatch(new ItemUpdate(this.cart))
-          console.log('update')
-        }else{
-          console.log('add1')
-          
-          this.store.dispatch(new ItemAdd(item))
-        }
-      })   
-    
-  
-    
-    
+          }    
+          if (index === array.length -1) {
+            resolve();  
+          }
+        });
+      }
+    });
+    finish.then(() => {    
+      if(status){
+        this.store.dispatch(new ItemUpdate(this.cart))
+
+      }else{
+     
+        this.store.dispatch(new ItemAdd(item))
+      }
+    })      
   }
 }
        

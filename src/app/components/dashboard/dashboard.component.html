@@ -48,7 +48,7 @@
             <th scope="col">Qty</th>
             <th scope="col">Price</th> 
           </tr>    
-          <tr *ngFor="let items of cart | async; let i=index">
+          <tr *ngFor="let items of cart ; let i = index">
             <td><button (click)="removeCustomer(i)"><i class="fa fa-trash"></i></button></td>
             <td>{{items.name}}</td>
             <td>{{items.qty}}</td>
@@ -65,6 +65,7 @@
     </div>
   </div>
   <div class="modal-footer" *ngIf="!empty"> 
+    <button (click)="removeAll()" class="btn btn-danger">Remove All</button>
     <button (click)="checkout()" class="btn btn-primary">Checkout</button>
   </div>
 

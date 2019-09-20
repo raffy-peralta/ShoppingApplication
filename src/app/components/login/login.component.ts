@@ -40,19 +40,28 @@ export class LoginComponent implements OnInit {
           
           this.cartService.getJSON().subscribe((data)=>{
             this.cart = data;
+            // console.log(this.cart);
             
             this.cart.forEach(element2 => {
-              if(element2.userId == element.id){
+              if(element2.id == element.id){
                 element2.items.forEach((element3, index, array) => {
-                  // console.log(element3);
+
                   this.store.dispatch(new ItemAdd(element3));
                   if (index === array.length -1){
                     this.authService.login(json);
+                    console.log('asdasd');
+                    
                   }
                 });
+              }else{
+                console.log('asdasd');
+                this.authService.login(json);
               } 
             }); 
-          })  
+            this.authService.login(json);
+          })
+          
+          
         }else{
           // this.error = true;
         }

@@ -22,42 +22,59 @@ import { CartService } from 'src/app/services/cart/cart.service';
   ]
 })
 export class DashboardComponent implements OnInit {
+
   storeItems: Observable<any> 
-  cart: Observable<Item[]>
+  cart: Item[]
   empty: boolean;
   total: any = 0;
   profile: Observable<any>
   id: any;
-  
+  dbCart: any[];
+
   constructor(private modalService: NgbModal, private store: Store<{items: Item[]}>,
     private itemsService: ItemsService, private router: Router, private authService: AuthService,
     private transactionsService: TransactionsService, private cartService: CartService) {
-    this.cart = store.pipe(select('cart'));
+    
    }
 
-  ngOnInit() {
+  ngOnInit() {   
+
     this.id = JSON.parse(localStorage.getItem('details')).id
-    // this.cart = this.home
+    
+    this.store.select('cart').subscribe((data) => {
+      this.cart = data;
+    })
+    console.log(this.cart);
+    
+
+    this.cartService.getJSON().subscribe((cart)=>{
+      this.dbCart = cart;
+    })
+
+    this.itemsService.getJSON().subscribe((data)=>{
+      this.storeItems = data;
+    })
+
+    this.checkCart();
+
   }
 
+
   checkCart(){
-    this.cart.subscribe(data=>{
-      console.log(data.length);
-      
-      if(data.length == 0){
-        this.empty = true;
-      }else{
-        this.empty = false;
-        console.log('pumapasok');
-        
-        this.totalCart(data); 
-      }
-    })
+    console.log(this.cart.length);
+
+    if(this.cart.length == 0){
+      this.empty = true;
+    }else{
+      this.empty = false;  
+      this.totalCart(this.cart); 
+    }  
   }
 
   removeCustomer(index){
     this.store.dispatch(new ItemRemove(index));
-    this.cart = this.store.pipe(select('cart'));
+    this.checkCart();
+    
   }
 
   totalCart(data){
@@ -66,84 +83,83 @@ export class DashboardComponent implements OnInit {
       data.forEach(element => {
         this.total = this.total + (element.price*element.qty)
       });
-      
 
-    // this.total = 0
-    // let i = 0
-    // this.cart.forEach(element => {
-    //   this.total = this.total + (parseInt(element[i].price)*element[i].qty)
-    //   i++;
-    //   console.log(element);
-      
-    // });
   }
   openComment(content) {    
-    
-    // console.log(this.cart);
     this.checkCart();
-   
     this.modalService.open(content, {scrollable: true});
   }
   
-  logout(){
-    this.cart.subscribe(data=>{
-      // console.log(data);
-      let json = {
-        items: data,
-        id: this.id 
-      }
-      // console.log(json);
-      
-      // this.cartService.insert(json).subscribe();
-
-    })
+  checkIfCartExists(): boolean{
+    let exists = false;
+    console.log(this.dbCart);
     
+    this.dbCart.forEach(element => {
+      if(element.id === this.id){
+        exists = true;
+      }
+    });
+
+    return exists;
+  }
+
+  logout(){
+    let json = {
+      items: this.cart,
+      id: this.id 
+    }
+
+    if(this.cart.length > 0){
+      if(this.checkIfCartExists()){
+        this.cartService.update(json, this.id).subscribe();
+      }else{
+        this.cartService.insert(json).subscribe();
+      }
+    }
+
     this.authService.logout();
     this.store.dispatch(new ItemRemoveAll);
     this.router.navigate(['login']);
     
   }
 
-
-  checkout(){
-    
-    this.modalService.dismissAll();
-    this.itemsService.getJSON().subscribe((item)=>{
-      this.storeItems = item;
-      console.log(item);
-      
-      this.cart.subscribe(data=>{
-        data.forEach(element => {        
-          item.forEach(element2 => {          
-            if(element2.id == element.id){
-              let json = {
-                name: element.name,
-                price: element.price,
-                stock: (element2.stock-element.qty),
-                img: element2.img
-              }
-              this.itemsService.update(json, element.id).subscribe((data)=>{       
-              })
-            } 
-          });
-        });
-        let json = {
-          items: data,
-          date: Date(),
-          userId: JSON.parse(localStorage.getItem('details')).id
-        }
-        console.log(json);
-        
-        this.transactionsService.insertTransactions(json).subscribe(data=>{
-          this.store.dispatch(new ItemRemoveAll())
-          this.router.navigate(['/dashboard/history']) 
-        });
-        
-      })
-
-       
-    })
-    
+  removeAll(){
+    this.store.dispatch(new ItemRemoveAll);
+    this.checkCart();
   }
 
+
+  checkout(){
+    this.modalService.dismissAll();    
+
+    this.cart.forEach(element => {        
+      //update stocks of items
+      this.storeItems.forEach(element2 => {          
+        if(element2.id == element.id){
+          let json = {
+            name: element.name,
+            price: element.price,
+            stock: (element2.stock-element.qty),
+            img: element2.img
+          }
+          this.itemsService.update(json, element.id).subscribe()
+        } 
+      });
+    });  
+    
+    let json = {
+      items: this.cart,
+      date: Date(),
+      userId: JSON.parse(localStorage.getItem('details')).id
+    }
+
+    this.transactionsService.insertTransactions(json).subscribe();
+    
+    if(this.checkIfCartExists()){
+      this.cartService.delete(this.id).subscribe();
+    }
+    this.store.dispatch(new ItemRemoveAll())
+    location.reload();
+    // this.router.navigate(['/dashboard/history']) 
+  }
 }
